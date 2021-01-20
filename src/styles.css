@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+a{
+    display: block;
+    width: 115px;
+    height: 25px;
+    background: #6a5acd;
+    padding:10px;
+    text-align:center;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    margin: 5px;
+}
