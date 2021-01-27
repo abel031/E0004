@@ -8,6 +8,8 @@ import { DeptosComponent } from './comp/deptos/deptos.component';
 import { EmpleadosComponent } from './comp/deptos/empleados/empleados.component';
 import { DeptoComponent } from './comp/deptos/depto/depto.component';
 import { TareasComponent } from './comp/deptos/tareas/tareas.component';
+import { LoginComponent } from './comp/login/login.component';
+import { AutenticadoGuard } from './comp/login/autenticado.guard';
 
 /*const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -21,15 +23,17 @@ import { TareasComponent } from './comp/deptos/tareas/tareas.component';
   ];*/
 
 const routes: Routes = [
-{path:'',redirectTo:"Home",pathMatch:"full"},
-{path:"Home",component:HomeComponent},
-{path:"Home/About",component:AboutComponent},
-{path:"Home/Deptos",component:DeptosComponent},
+//{path:'',redirectTo:"Home",pathMatch:"full"},
+{path:'',redirectTo:"Login",pathMatch:"full", canActivate:[AutenticadoGuard]},
+{path:"Login",component:LoginComponent},
+{path:"Home",component:HomeComponent, canActivate:[AutenticadoGuard]},
+{path:"Home/About",component:AboutComponent, canActivate:[AutenticadoGuard]},
+{path:"Home/Deptos",component:DeptosComponent, canActivate:[AutenticadoGuard]},
 {path:"Home/Deptos/Depto/:id",component:DeptoComponent,
   children:[
     {path:"Empleados/:id/:nomDepto",component:EmpleadosComponent},
     {path:"Tareas/:id",component:TareasComponent}
-  ]
+  ], canActivate:[AutenticadoGuard]
 },
 {path:"**",component:PageNotFoundComponent}
 ];
@@ -40,4 +44,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const ComponentesCreados=[HomeComponent, AboutComponent, DeptosComponent, EmpleadosComponent, PageNotFoundComponent, DeptoComponent, TareasComponent];
+export const ComponentesCreados=[HomeComponent, AboutComponent, DeptosComponent, EmpleadosComponent, PageNotFoundComponent, DeptoComponent, TareasComponent,LoginComponent];

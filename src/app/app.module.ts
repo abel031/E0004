@@ -3,9 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule,ComponentesCreados } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DeptoComponent } from './comp/deptos/depto/depto.component';
 import { BackButtonDirective } from './util/back-button.directive';
-import { TareasComponent } from './comp/deptos/tareas/tareas.component';
 
 
 @NgModule({

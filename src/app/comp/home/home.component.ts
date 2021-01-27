@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Session } from 'inspector';
+import { GestionarSesionService } from '../login/gestionar-sesion.service';
 
 @Component({
   selector: 'Home',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private session:GestionarSesionService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  Salir(){
+    this.session.LogOut();
+    this.router.navigateByUrl('Login');
   }
 
 }
