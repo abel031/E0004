@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Isession } from 'src/app/pojos/isession';
-import { GestionarSesionService } from './gestionar-sesion.service';
+import { GestionarSesionService } from '../../shared/servicios/gestionar-sesion.service';
 import { LoginService } from './login.service';
 
 @Component({

@@ -2,4 +2,5 @@
 
 <tr *ngFor="let emp of Empleados; let i=index">
     <td>{{emp.name}} {{emp.username}} {{emp.gmail}}</td>
+    <td><app-star [rating]='emp.Rendimiento' [id]='i'  (ratingClicked)='metodoPadre($event)'> </app-star></td>
 </tr>

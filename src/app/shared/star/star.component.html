@@ -1,0 +1,12 @@
+<div [title]="rating"
+     (click)="onClick()">
+
+  <button style="width: 75px">
+    <span *ngIf="Una()" >+</span>
+    <span *ngIf="Dos()">+</span>
+    <span *ngIf="Tres()">+</span>
+    <span *ngIf="Cuatro()">+</span>
+    <span *ngIf="Cinco()">+</span>   
+    <span> &nbsp;({{rating}})</span>
+  </button>
+</div>

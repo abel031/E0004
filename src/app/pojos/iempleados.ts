@@ -1,7 +1,8 @@
 export interface Iempleados {
-    id:number,
-    name:string,
-    username:string,
-    email:string,
-    depto:string,
+    id:number;
+    name: string;
+    username:string; 
+    email: string;
+    depto:string;
+    Rendimiento:number;
 }

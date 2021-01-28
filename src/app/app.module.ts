@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule,ComponentesCreados } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BackButtonDirective } from './util/back-button.directive';
+import { StarModule } from './shared/star.module';
+import { ProductosModule } from './comp/deptos/productos/productos.module';
 
 
 @NgModule({
@@ -15,6 +17,8 @@ import { BackButtonDirective } from './util/back-button.directive';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    StarModule,
+    ProductosModule
   ],
   providers: [],
   bootstrap: [AppComponent]

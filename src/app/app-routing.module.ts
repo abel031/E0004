@@ -10,6 +10,7 @@ import { DeptoComponent } from './comp/deptos/depto/depto.component';
 import { TareasComponent } from './comp/deptos/tareas/tareas.component';
 import { LoginComponent } from './comp/login/login.component';
 import { AutenticadoGuard } from './comp/login/autenticado.guard';
+import { ProductosModule } from './comp/deptos/productos/productos.module';
 
 /*const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -32,7 +33,10 @@ const routes: Routes = [
 {path:"Home/Deptos/Depto/:id",component:DeptoComponent,
   children:[
     {path:"Empleados/:id/:nomDepto",component:EmpleadosComponent},
-    {path:"Tareas/:id",component:TareasComponent}
+    {path:"Tareas/:id",component:TareasComponent},
+    {path:"Productos",
+      loadChildren:()=>import("./comp/deptos/productos/productos.module").then(m=>m.ProductosModule)
+    }
   ], canActivate:[AutenticadoGuard]
 },
 {path:"**",component:PageNotFoundComponent}

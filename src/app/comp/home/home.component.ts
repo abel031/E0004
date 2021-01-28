@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Session } from 'inspector';
-import { GestionarSesionService } from '../login/gestionar-sesion.service';
+import { GestionarSesionService } from '../../shared/servicios/gestionar-sesion.service';
 
 @Component({
   selector: 'Home',
@@ -10,13 +9,13 @@ import { GestionarSesionService } from '../login/gestionar-sesion.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private session:GestionarSesionService, private router: Router) { }
+  constructor(private sesion:GestionarSesionService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   Salir(){
-    this.session.LogOut();
+    this.sesion.LogOut();
     this.router.navigateByUrl('Login');
   }
 

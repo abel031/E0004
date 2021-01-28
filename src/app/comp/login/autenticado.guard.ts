@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable, TimeoutError } from 'rxjs';
-import { GestionarSesionService } from './gestionar-sesion.service';
+import { GestionarSesionService } from '../../shared/servicios/gestionar-sesion.service';
 
 @Injectable({
   providedIn: 'root'
