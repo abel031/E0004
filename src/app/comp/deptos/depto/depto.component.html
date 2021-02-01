@@ -17,7 +17,16 @@
 
 <app-empleados [idDepto]=idDepto></app-empleados>
 
-<router-outlet></router-outlet>
+<!--<div *ngIf="Departamento.name == 'Almacen'">
+    <router-outlet></router-outlet>
+</div>-->
+
+<hr/>
+
+<router-outlet name="ModuloProductos"></router-outlet>
+<router-outlet name="EditProductos"></router-outlet>
+
+
 
 <a routerLink="../..">Volver</a>
 

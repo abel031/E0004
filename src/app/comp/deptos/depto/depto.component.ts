@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { relative } from 'path';
 import { Ideptos } from 'src/app/pojos/ideptos';
 import { DeptosService } from '../deptos.service';
 
@@ -22,7 +21,11 @@ export class DeptoComponent implements OnInit {
         this.idDepto = param.get("id");
         var Depto:Ideptos[] = this.datosDepto.getDeptos(parseInt(this.idDepto));
         this.Departamento = Depto[0];
-        this.verProducto();
+        if(this.Departamento.id == '3'){
+          this.verProducto();
+        }
+        //this.verProducto();
+        
       }
     )
     
