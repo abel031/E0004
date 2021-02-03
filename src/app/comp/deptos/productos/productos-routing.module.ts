@@ -7,7 +7,6 @@ import { EditProductoComponent } from './edit-producto/edit-producto.component';
 
 const routes: Routes = [
     { path: '', component: ListaProductosComponent, outlet:"ModuloProductos"},  
-    { path: 'Edita/:id', component:EditProductoComponent, outlet:"EditProductos"}, 
     { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -1,46 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
-import { IProductos} from 'src/app/pojos/iproductos';
+import { IProductos, ProductosToAJSON} from 'src/app/pojos/iproductos';
+import { DaoProductosService } from '../../DAO/dao-productos.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductosService {
   private productUrl = 'assets/products/products.json';
+  productos: IProductos[];
+  productos$ = new Subject<IProductos[]>();
+  errrorMessage='';
 
-  constructor(private http: HttpClient) { }
-  getProductos(): Observable<IProductos[]> {
-    return this.http.get<IProductos[]>(this.productUrl);  // Ademas de devolver el json lo muestra en consola!!
-    /*.pipe(
-          tap(data => console.log('All: ' + JSON.stringify(data))),
-          catchError(this.handleError)      
-        );
-     */   
-    }
+  constructor(private DaoProductos:DaoProductosService) { }
   
-    getProducto(id: number): Observable<IProductos | undefined> {
-      return this.getProductos()
-        .pipe(
-          map((products: IProductos[]) => products.find(p => p.productId === id))
-        );
-    }
+  getProductos():Observable<IProductos[]>{
+    this.DaoProductos.get().subscribe({
+        next: 	producto	=>	{
+            this.productos=ProductosToAJSON(producto);
+            this.productos$.next(this.productos);
+            return this.productos$.asObservable();
+            },
+        error: err => this.errrorMessage=err
+  });
+  return this.productos$.asObservable();
+  }
 
-    private handleError(err: HttpErrorResponse) {
-      // in a real world app, we may send the server to some remote logging infrastructure
-      // instead of just logging it to the console
-      let errorMessage = '';
-      if (err.error instanceof ErrorEvent) {
-        // A client-side or network error occurred. Handle it accordingly.
-        errorMessage = `Ha passat un error: ${err.error.message}`;
-      } else {
-        // The backend returned an unsuccessful response code.
-        // The response body may contain clues as to what went wrong,
-        errorMessage = `Codigo devuelto por el Server: ${err.status}, Mensaje: ${err.message}`;
+  EliminarProducto(id){
+    this.DaoProductos.Eliminar(id).subscribe(
+      (ok) =>{
+        let index = this.productos.findIndex(item => item.productId = id);
+        this.productos.splice(index,1);
+        this.productos$.next(this.productos);
       }
-      console.error(errorMessage);
-      return throwError(errorMessage);
-    }
+    )
+  }
 
 }

@@ -15,6 +15,8 @@ export class ListaProductosComponent implements OnInit {
   _listFilter = '';  // Nombre de producto a filtrar
   ProductosFiltrados: IProductos[] = []; //Lo que se muestra en la vista!!
   productos: IProductos[] = [];  //Todos los productos!!
+  editing:boolean = false;
+  producto:IProductos;
 
   constructor(private RutaActiva: ActivatedRoute,
               private router: Router,
@@ -22,12 +24,12 @@ export class ListaProductosComponent implements OnInit {
 
   ngOnInit(): void {
     this.productosService.getProductos().subscribe({
-      next: productos => {
-        this.productos = productos;
-        this.ProductosFiltrados = this.productos;
-      },
-      error: err => this.errorMessage = err
-    });
+			next:  	productos =>{
+						this.productos=productos;
+						this.ProductosFiltrados = this.productos;	
+					},
+			error:	err => this.errorMessage=err
+	});
   }
 
   toggleImage(): void {
@@ -55,5 +57,9 @@ export class ListaProductosComponent implements OnInit {
 
   onEdit(id){   
       this.router.navigate(['./Edita',id], {relativeTo:this.RutaActiva});  // Outlet generico hijo!!!
+  }
+
+  Eliminar(id){
+    this.productosService.EliminarProducto(id);
   }
 }

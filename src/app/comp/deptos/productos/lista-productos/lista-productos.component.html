@@ -1,3 +1,4 @@
+<div *ngIf="!editing">
 <div>
     <h2 >{{Title}}</h2>
     <div><tr>
@@ -29,6 +30,9 @@
                           (ratingClicked)='onRatingClicked($event)'>
                   </app-star>
                 </td>
+                <td>
+                  <button (Click)="Eliminar(producto.productId)">Eliminar</button>
+                </td>
               </tr>
             </tbody>
         </table>
@@ -39,3 +43,49 @@
   </div>
 
 <button BackButton>Volver</button>
+</div>
+<div *ngIf="editing">
+  <h2> {{pageTitle + ': ' + product.productName}}</h2>
+
+<form #FProducto="ngForm" (ngSubmit)="onSubmit()">
+
+  <!-- {{FProducto.value| json}} <hr>  {{product | json}}<hr> <br>-->
+  {{FProducto.form.valid}}
+  <p><label for="name">Nombre</label>
+     <!--<input value="{{product.productName}}" type="text" (blur)="setFocus('DESC')"  name="producto"     placeholder="Ingresar Nombre"></p> -->
+     <input  [(ngModel)]="product.productName" value="{{product.productName}}" type="text"   name="producto"     placeholder="Ingresar Nombre"></p>
+
+  <p><label for="codigo">código</label>
+     <input       #codigo="ngModel" [class.is-invalid]="codigo.invalid && codigo.touched" required pattern="[\w]{3}[-][0-9]{4}$" 
+             [(ngModel)]="product.productCode" type="text" name="codigo"                placeholder="Ingresar Descripción"></p>
+      <!--<small [class.d-none]="codigo.valid || codigo.untouched">Mas de 3 digitos y obligatorio</small>-->
+      <div *ngIf="codigo.invalid && codigo.touched">       
+        <small  [class.d-show]="codigo.invalid" *ngIf="codigo.hasError('required')">Campo obligatorio</small> 
+        <small  [class.d-show]="codigo.invalid" *ngIf="codigo.hasError('pattern')">Formato: 3 Letras - 4 Nros</small>      
+      </div>  
+      <!--  <div>{{codigo.errors | json}}</div>  
+           <button (click)="logMessage(codigo)">Log</button>  
+     -->    
+
+  <p><label for="descripction">Descripcón</label>
+     <input        [(ngModel)]="product.description"               type="text"   name="descripcion" placeholder="Ingresar Género"></p>
+  <p><label for="fecha">Fecha</label>
+     <input #DATA [(ngModel)]="product.releaseDate"  type="text" name="fecha"       placeholder="Fecha"></p>
+  <p><label for="price">Precio</label>
+     <input [(ngModel)]="product.price" type="number"      name="price"       placeholder="Ingresar Año"></p>
+  <p><label for="rating"> 5 Star Rating:</label>       
+            <app-star [rating]='product.starRating'>
+            </app-star>
+  </p>
+  <p>
+    <img [style.width.px]='200' [style.margin.px]='2'
+         [src]='product.imageUrl'
+         [title]='product.productName'>
+  </p>  
+  <!-- <button (click)="onSubmit()" class="btn btn-primary btn-block">Guardar</button> -->
+
+   <button [disabled]="FProducto.form.invalid" type="submit">Guardar</button>
+
+</form>
+<a routerLink="../../">volver</a>
+</div>
