@@ -30,4 +30,8 @@ export class DaoProductosService {
     console.error(errorMessage);
     return throwError(errorMessage);
   }
+
+  Eliminar(id:number){
+    return this.http.delete(this.API+"/productos/"+id);
+  }
 }
