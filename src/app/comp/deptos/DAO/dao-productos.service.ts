@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -13,6 +13,26 @@ export class DaoProductosService {
 
   get():Observable<any>{
       return this.http.get<[]>(this.API + "/productos").pipe(catchError(this.handleError));
+  }
+
+  Eliminar(id:number){
+    return this.http.delete(this.API+"/productos/"+id);
+  }
+
+  getId(id: number):  Observable<any> {  // Ahora devuelve un json de la BD
+    return this.http.get<[]>(this.API + '/productos/'+  id)    
+    .pipe(catchError(this.handleError));  
+  }
+
+  put(producto) {                       // Modificar producto en la BD
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.put(this.API + '/productos/' + producto.productId , producto,
+                                     {headers: headers});
+  }
+  
+  Nuevo(producto) {                     // Nuevo producto en la BD
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post(this.API + '/productos', producto, {headers: headers});
   }
 
   private handleError(err: HttpErrorResponse) {
@@ -31,7 +51,4 @@ export class DaoProductosService {
     return throwError(errorMessage);
   }
 
-  Eliminar(id:number){
-    return this.http.delete(this.API+"/productos/"+id);
-  }
 }

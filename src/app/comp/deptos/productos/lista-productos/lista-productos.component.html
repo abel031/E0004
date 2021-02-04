@@ -1,6 +1,7 @@
 <div *ngIf="!editing">
 <div>
     <h2 >{{Title}}</h2>
+    <button (click) ="Nuevo()">Nuevo Producto</button>
     <div><tr>
             Filtrar por:<div ><input type='text' [(ngModel)]='listFilter' /></div>
         </tr>
@@ -70,7 +71,7 @@
   <p><label for="descripction">Descripcón</label>
      <input        [(ngModel)]="product.description"               type="text"   name="descripcion" placeholder="Ingresar Género"></p>
   <p><label for="fecha">Fecha</label>
-     <input #DATA [(ngModel)]="product.releaseDate"  type="text" name="fecha"       placeholder="Fecha"></p>
+     <input #DATA [(ngModel)]="product.releaseDate"  type="date" name="fecha"       placeholder="Fecha"></p>
   <p><label for="price">Precio</label>
      <input [(ngModel)]="product.price" type="number"      name="price"       placeholder="Ingresar Año"></p>
   <p><label for="rating"> 5 Star Rating:</label>       

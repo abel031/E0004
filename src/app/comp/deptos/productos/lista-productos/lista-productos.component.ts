@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IProductos} from '../../../../pojos/iproductos';
+import { IProductos, ProductoNuevo} from '../../../../pojos/iproductos';
 import { ProductosService } from '../services/productos.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,7 +16,8 @@ export class ListaProductosComponent implements OnInit {
   ProductosFiltrados: IProductos[] = []; //Lo que se muestra en la vista!!
   productos: IProductos[] = [];  //Todos los productos!!
   editing:boolean = false;
-  producto:IProductos;
+  product:IProductos;
+  nuevo : boolean = false;
 
   constructor(private RutaActiva: ActivatedRoute,
               private router: Router,
@@ -55,11 +56,33 @@ export class ListaProductosComponent implements OnInit {
     // this.producto.starRating ++   Pero no podemos hacerlo por ahora !!
   }
 
-  onEdit(id){   
-      this.router.navigate(['./Edita',id], {relativeTo:this.RutaActiva});  // Outlet generico hijo!!!
+  onEdit(id){
+      this.editing = true;
+      let ItemIndex = this.productos.findIndex(item => item.productId = id);
+      this.product = this.productos[ItemIndex]
+      //this.router.navigate(['./Edita',id], {relativeTo:this.RutaActiva});  // Outlet generico hijo!!!
+  }
+
+  onSubmit(){
+    if (this.nuevo){
+      this.nuevo = false;
+      this.editing = false
+      this.productosService.NuevoProducto(this.product);
+    }
+    else{
+    this.productosService.UpdateProducto(this.product);
+    this.editing = false;
+    //this.router.navigate(["./.."],  {relativeTo:this.RutaActiva})
+    }
   }
 
   Eliminar(id){
-    this.productosService.EliminarProducto(id);
+    this.productosService.EliminaProducto(id);
+  }
+
+  Nuevo(){
+    this.nuevo = true;
+    this.product = ProductoNuevo(0,"","","","","","","");
+    this.editing = true;
   }
 }
