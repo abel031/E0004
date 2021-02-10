@@ -75,7 +75,7 @@
   <p><label for="price">Precio</label>
      <input [(ngModel)]="product.price" type="number"      name="price"       placeholder="Ingresar Año"></p>
   <p><label for="rating"> 5 Star Rating:</label>       
-            <app-star [rating]='product.starRating'>
+            <app-star [rating]='product.starRating' (ratingClicked)='onRatingClicked($event)'>
             </app-star>
   </p>
   <p>

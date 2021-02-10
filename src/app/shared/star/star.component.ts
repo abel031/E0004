@@ -1,4 +1,6 @@
 import { Component, OnChanges, Input, EventEmitter, Output } from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-star',
@@ -18,12 +20,31 @@ export class StarComponent implements OnChanges {
 
   @Output() ratingClicked: EventEmitter<any> = new EventEmitter<any>();
 
+  private snackBarDuration: number = 2000;
+  ratingArr = [];
+  private starCount=5;
+  color="yellow";
+
+
+
+  constructor(private snackBar: MatSnackBar) {
+  }
+
+
+  ngOnInit() {
+   
+    for (let index = 0; index < this.starCount; index++) {
+      this.ratingArr.push(index);
+    }
+  }
+
   ngOnChanges(): void {
     this.starWidth = Math.round(this.rating); 
   }
 
+/*
   onClick(): void {
-    this.ratingClicked.emit({msg:'The rating ${this.rating} was clicked!',id: this.id});
+    
   }
 
   Una():boolean{ return this.starWidth>=1?true:false};
@@ -31,6 +52,30 @@ export class StarComponent implements OnChanges {
   Tres():boolean{ return this.starWidth>=3?true:false};
   Cuatro():boolean{ return this.starWidth>=4?true:false};
   Cinco():boolean{ return this.starWidth>=5?true:false};
+
+
+*/
+
+
+onClick(rating:number) {
+  
+  this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
+    duration: this.snackBarDuration
+  });  
+  this.ratingClicked.emit(rating);
+  return false;
+}
+
+// https://www.angularjswiki.com/angular/angular-material-icons-list-mat-icon-list/
+// return 'star_half'; també exist
+showIcon(index:number) {
+  if (this.rating >= index + 1) {
+    return 'star';
+  } else {
+    return 'star_border';
+  }
+}
+
 
 }
 

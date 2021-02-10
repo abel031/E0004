@@ -51,9 +51,10 @@ export class ListaProductosComponent implements OnInit {
       producto.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
  
-  onRatingClicked(message: string): void {
-    this.Title = 'Lista de Productos: ' + message;
+  onRatingClicked($event): void {
+    console.log($event)
     // this.producto.starRating ++   Pero no podemos hacerlo por ahora !!
+    this.product.starRating ++
   }
 
   onEdit(id){

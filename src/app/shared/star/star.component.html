@@ -1,3 +1,5 @@
+
+<!--
 <div [title]="rating"
      (click)="onClick()">
 
@@ -10,3 +12,21 @@
     <span> &nbsp;({{rating}})</span>
   </button>
 </div>
+-->
+
+<button mat-icon-button color="accent"
+          style="padding: 0; border: none;background: none;" 
+          *ngFor="let ratingId of ratingArr;index as i" 
+          [id]="'star_'+i" 
+          (click)="onClick(i+1)" 
+          [matTooltip]="ratingId+1" 
+          matTooltipPosition="above">
+          
+          <span class="material-icons" style="color: blue;">
+            {{showIcon(i)}}
+          </span>  
+  
+</button>
+
+
+
