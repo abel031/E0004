@@ -1,2 +1,244 @@
-<p>about works!</p>
-<a routerLink="/">Volver</a>
+  <div class="example-button-row">
+    <button mat-flat-button>Basic</button>
+    <button mat-flat-button color="primary">Primary</button>
+    <button mat-flat-button color="accent">Accent</button>
+    <button mat-flat-button color="warn">Warn</button>
+    <button mat-flat-button disabled>Disabled</button>
+    <a mat-flat-button href="https://www.google.com/" target="_blank">Link</a>
+  </div>
+
+    <br>
+
+  <div class="example-label">Mini FAB</div>
+  <div class="example-button-row">
+    <div class="example-flex-container">
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div class="example-button-container">
+        <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+          <mat-icon>plus_one</mat-icon>
+        </button>
+      </div>
+      <div class="example-button-container">
+        <button mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+      <div class="example-button-container">
+        <button mat-mini-fab disabled aria-label="Example icon button with a home icon">
+          <mat-icon>home</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+<br>
+<br>
+<hr>
+
+
+<hr>
+<h2> Tabs </h2>
+<hr>
+<mat-tab-group  [(selectedIndex)]="selectedIndex">
+  <mat-tab> 
+      <ng-template mat-tab-label>
+        <mat-icon>thumb_up</mat-icon> Lista
+      </ng-template>
+      AQUí METO UNA LISTA ...
+  </mat-tab>
+
+  <mat-tab label="Formulario"> 
+      AQUí METO UN FORMULARIO
+  </mat-tab>
+  <mat-tab label="Third"> 
+      AQUí METO ORO CONTENIDO
+  </mat-tab>
+</mat-tab-group>
+
+<br>
+<h2>Lista</h2>
+<mat-list>      
+  <mat-list-item   *ngFor="let country of countries;let i =index">
+    <h3 matLine (click)="confirm('hola1:'+i);"> 
+      <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" style="width: 20px"/>
+      {{ country.name }} 
+    </h3>
+    <p matLine>
+      <span>Area: {{ country.area | number }} </span>
+      <span class="demo-2"> PoblaciÃ³n: {{ country.population | number }} </span>
+    </p>
+    <button mat-stroked-button (click)="confirm('hola2:'+i);"><mat-icon>play_arrow</mat-icon><br></button> 
+  </mat-list-item>
+</mat-list> 
+<br>
+<hr>
+
+
+
+<h2>sidenav</h2>
+<mat-sidenav-container class="example-container" >
+  <mat-sidenav opened mode="side">Start content</mat-sidenav>
+  <mat-sidenav opened mode="side" position="end">End content</mat-sidenav>
+  Implicit main content
+</mat-sidenav-container>
+
+<br>
+<hr>
+<h2>Tab que contiene en un elemento una lista</h2>
+
+<mat-tab-group>
+  <mat-tab> 
+      <ng-template mat-tab-label>
+        <mat-icon>thumb_up</mat-icon> Lista
+      </ng-template>
+      AQUí METO UNA LISTA ...
+  </mat-tab>
+
+  <mat-tab label="Lista"> 
+    <mat-list>      
+      <mat-list-item   *ngFor="let country of countries;let i =index">
+        <h3 matLine (click)="confirm('hola1:'+i);"> 
+          <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" style="width: 20px"/>
+          {{ country.name }} 
+        </h3>
+        <p matLine>
+          <span>Area: {{ country.area | number }} </span>
+          <span class="demo-2"> PoblaciÃ³n: {{ country.population | number }} </span>
+        </p>
+        <button mat-stroked-button (click)="confirm('hola2:'+i);"><mat-icon>play_arrow</mat-icon><br></button> 
+      </mat-list-item>
+    </mat-list>
+  </mat-tab>
+  <mat-tab label="Third"> 
+      AQUí METO ORO CONTENIDO
+  </mat-tab>
+</mat-tab-group>
+
+<hr>
+<br>
+<h2>Otra vez sidenav</h2>
+<mat-sidenav-container class="example-container" >
+  <mat-sidenav  #sidenav1>
+      <button mat-button (click)="sidenav1.toggle()" > <mat-icon>menu</mat-icon>
+      Cierra Menú</button><br>
+      <button mat-stroked-button (click)="sidenav1.close()" ><mat-icon>person</mat-icon> Ver lista </button><br>      
+      <button mat-stroked-button><mat-icon>home</mat-icon>Home </button><br>
+      <button mat-stroked-button (click)="sidenav1.close()"><mat-icon>directions_run</mat-icon>Salir</button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <p><button mat-button (click)="sidenav1.toggle()"><mat-icon>menu</mat-icon>Abre Menú</button></p>
+      Aqui va el contenido !!!
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <br>
+  </mat-sidenav-content>
+ 
+</mat-sidenav-container>
+
+<hr>
+<br>
+<h2>Sidenav con tab</h2>
+<mat-sidenav-container class="example-container" >
+  <mat-sidenav  #sidenavcontab>
+      <button mat-button (click)="sidenavcontab.toggle()" > <mat-icon>menu</mat-icon>
+      Cierra Menú</button><br>
+      <button mat-stroked-button (click)="sidenavcontab.close();Tab(1);" ><mat-icon>person</mat-icon> Ver lista </button><br>      
+      <button mat-stroked-button (click)="sidenavcontab.close();NoTabs()"><mat-icon>home</mat-icon> Ocultar tabs </button><br>
+      <button mat-stroked-button (click)="sidenavcontab.close()"><mat-icon>directions_run</mat-icon>Salir</button>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <p><button mat-button (click)="sidenavcontab.toggle()"><mat-icon>menu</mat-icon>Abre Menú</button></p>
+     
+      
+      <div *ngIf="VerTabs">
+
+              <h2>Tab que contiene en un elemento una lista</h2>
+
+              <mat-tab-group  [(selectedIndex)]="selectedIndex1">
+                <mat-tab> 
+                    <ng-template mat-tab-label>
+                      <mat-icon>thumb_up</mat-icon> Lista
+                    </ng-template>
+                    AQUí METO UNA LISTA ...
+                </mat-tab>
+
+                <mat-tab label="Lista"> 
+                  <mat-list>      
+                    <mat-list-item   *ngFor="let country of countries;let i =index">
+                      <h3 matLine (click)="confirm('hola1:'+i);"> 
+                        <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" style="width: 20px"/>
+                        {{ country.name }} 
+                      </h3>
+                      <p matLine>
+                        <span>Area: {{ country.area | number }} </span>
+                        <span class="demo-2"> PoblaciÃ³n: {{ country.population | number }} </span>
+                      </p>
+                      <button mat-stroked-button (click)="confirm('hola2:'+i);"><mat-icon>play_arrow</mat-icon><br></button> 
+                    </mat-list-item>
+                  </mat-list>
+                </mat-tab>
+                <mat-tab label="Third"> 
+                    AQUí METO ORO CONTENIDO
+                </mat-tab>
+              </mat-tab-group>
+
+      </div>
+      Aqui va el contenido !!!
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+  </mat-sidenav-content>
+ 
+</mat-sidenav-container>
+<br>
+<br>
+<hr>
+
+<p>
+  <mat-form-field appearance="legacy">
+    <mat-label>Legacy form field</mat-label>
+    <input matInput placeholder="Placeholder">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field appearance="standard">
+    <mat-label>Standard form field</mat-label>
+    <input matInput placeholder="Placeholder">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Fill form field</mat-label>
+    <input matInput placeholder="Placeholder">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field appearance="outline">
+    <mat-label>Outline form field</mat-label>
+    <input matInput placeholder="Placeholder">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Hint</mat-hint>
+  </mat-form-field>
+</p>
+
+
+
+
+<a routerLink="../">Volver</a>

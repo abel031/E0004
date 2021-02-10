@@ -1,7 +1,36 @@
-<h1>HOME</h1>
+ <mat-toolbar >
 
-<ul>
-    <li><a routerLink="./About">About</a></li>
-    <li><a routerLink="./Deptos">Departamentos</a></li>
-    <li><Button (click)="Salir()">Salir</Button></li>
-</ul>
+    <button mat-button [matMenuTriggerFor]="menu" md-raised-button >        
+        <span class="material-icons">
+          home
+          </span>
+        Menú de inicio
+    </button>
+
+      <mat-menu #menu="matMenu" >
+
+        <button mat-menu-item  routerLink="./About" md-raised-button >
+            <mat-icon>dialpad</mat-icon>    
+            <span>About</span>
+        </button>
+        
+        <button mat-menu-item routerLink="./Deptos" md-raised-button >
+          <mat-icon>dialpad</mat-icon>
+          <span>Departamentos</span>
+        </button>
+
+      </mat-menu>    
+      &nbsp;
+      <button mat-button  (click)="Salir()" md-raised-button >
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>        
+      </button>
+      &nbsp;
+      <!--
+      <button mat-button  (click)="Salir()" md-raised-button >
+        <i class="material-icons">face</i>
+        <span>Logout</span>        
+      </button>
+      -->
+</mat-toolbar>
+

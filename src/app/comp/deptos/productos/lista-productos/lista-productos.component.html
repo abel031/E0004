@@ -1,92 +1,191 @@
-<div *ngIf="!editing">
-<div>
+<div *ngIf="!editing" >
     <h2 >{{Title}}</h2>
-    <button (click) ="Nuevo()">Nuevo Producto</button>
     <div><tr>
             Filtrar por:<div ><input type='text' [(ngModel)]='listFilter' /></div>
         </tr>
         <tr *ngIf='listFilter'><h4>Filtered by: {{listFilter}}</h4></tr>
+        <tr><a (click)="NuevoProducto()">Añadir</a></tr>
+        <hr>
         <table *ngIf='productos && productos.length'>
             <thead><th><button (click)='toggleImage()'>{{showImage ? 'Hide' : 'Show'}} Image</button></th>
                    <th>Producto</th>
                    <th>Codigo</th>
                    <th>Disponible</th>
                    <th>Precio</th>
-                   <th>Calificación</th>         
+                   <th>Calificación</th>  
+                   <th>Eliminar</th>       
             </thead>
             <tbody>
-              <tr *ngFor='let producto of ProductosFiltrados'>
+              <tr *ngFor='let producto of ProductosFiltrados;  index as i'>
                 <td><img *ngIf='showImage'
                       [title]='producto.productName'
                       [style.width.px]='imageWidth'
                       [style.margin.px]='imageMargin'
                       [src]='producto.imageUrl' />
                 </td>
-                <td><button (click)="onEdit(producto.productId)">{{ producto.productName }}</button></td>
+                <td> <button style="width: 100px;" (click)="onEdit( producto.productId)">{{ producto.productName | slice:0:10 }}</button></td>
                 <td>{{ producto.productCode | lowercase }}</td>
-                <td>{{ producto.releaseDate }}</td>
-                <td>{{ producto.price | currency:'EUR':'symbol':'1.2-2'}}</td>
+                <td>{{ producto.releaseDate | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ producto.price | currency:'EUR':'symbol':'1.2-2'}}</td>                 
                 <td>
                   <app-star [rating]='producto.starRating'
                           (ratingClicked)='onRatingClicked($event)'>
                   </app-star>
                 </td>
                 <td>
-                  <button (Click)="Eliminar(producto.productId)">Eliminar</button>
+                  <button (click)="Eliminar(producto.productId)">Elimina</button>
                 </td>
               </tr>
             </tbody>
         </table>
       </div>
+      <hr>
+    
+      <h2>Material Tabla </h2>
+      <hr>
+      <hr>
+
+      <table mat-table [dataSource]="ProductosFiltrados"  class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let producto"> 
+            <!--<a style="width: 100px;" (click)="onEdit( producto.productId)">{{ producto.productName | slice:0:10 }}</a> -->
+              
+            <a  (click)="onEdit( producto.productId)" >{{ producto.productName | slice:0:10 }} </a>
+           </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="productCode">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let producto"> {{ producto.productCode | lowercase }} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="releaseDate">
+          <th mat-header-cell *matHeaderCellDef > Weight </th>
+          <td mat-cell *matCellDef="let producto"> {{ producto.releaseDate | date: 'dd/MM/yyyy' }} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="starRating">
+          <th mat-header-cell *matHeaderCellDef> Symbol </th>
+          <td mat-cell *matCellDef="let producto"> 
+                 <app-star [rating]='producto.starRating'
+                          (ratingClicked)='onRatingClicked($event)'>
+                  </app-star>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    
+      <h2>Material lista</h2>
+      <hr>
+      <mat-list>             
+            <mat-list-item *ngFor ="let producto of ProductosFiltrados"  >
+              <tr rowspan="2" matLine >    
+                <td style="width: 10%;" >
+                   
+                </td>     
+                <td style="width: 70%;">
+                    <button style="width: 100px;" 
+                              (click)="onEdit( producto.productId)">{{ producto.productName | slice:0:10 }}
+                    </button>
+                </td>
+                <td style="width: 10%;">{{producto.price| currency}}</td> 
+                <td>
+                        <button (click)="Eliminar(producto.productId)">Elimina</button>
+                </td>                    
+              </tr>
+                 
+             
+              <tr matline>
+                  <td style="width: 10%;" >
+                       <img *ngIf='showImage'
+                            [title]='producto.productName'
+                            [style.width.px]='imageWidth'
+                            [style.margin.px]='imageMargin'
+                            [src]='producto.imageUrl' />
+                  </td> 
+                  <td style="vertical-align: middle;width: 20%;background-color:	#E8E8E8">{{producto.description}}</td>
+                  <td  colspan="2" style="vertical-align: middle;width: 20%;" >  
+                      <app-star [rating]='producto.starRating'
+                                      (ratingClicked)='onRatingClicked($event)'>
+                      </app-star>
+                  </td>
+                  <td> </td>
+              </tr>
+          </mat-list-item>
+  
+      </mat-list>
+
+  
   </div>
   <div *ngIf='errorMessage'>
     Error: {{ errorMessage }}
   </div>
 
-<button BackButton>Volver</button>
-</div>
-<div *ngIf="editing">
-  <h2> {{pageTitle + ': ' + product.productName}}</h2>
+  <div *ngIf="editing" >  
 
-<form #FProducto="ngForm" (ngSubmit)="onSubmit()">
+    <h2> {{pageTitle + ': ' + product.productName}}</h2>
 
-  <!-- {{FProducto.value| json}} <hr>  {{product | json}}<hr> <br>-->
-  {{FProducto.form.valid}}
-  <p><label for="name">Nombre</label>
-     <!--<input value="{{product.productName}}" type="text" (blur)="setFocus('DESC')"  name="producto"     placeholder="Ingresar Nombre"></p> -->
-     <input  [(ngModel)]="product.productName" value="{{product.productName}}" type="text"   name="producto"     placeholder="Ingresar Nombre"></p>
+    <mat-card class="example-card">
+      <form #FProducto="ngForm"  (ngSubmit)="onSubmit()">
 
-  <p><label for="codigo">código</label>
-     <input       #codigo="ngModel" [class.is-invalid]="codigo.invalid && codigo.touched" required pattern="[\w]{3}[-][0-9]{4}$" 
-             [(ngModel)]="product.productCode" type="text" name="codigo"                placeholder="Ingresar Descripción"></p>
-      <!--<small [class.d-none]="codigo.valid || codigo.untouched">Mas de 3 digitos y obligatorio</small>-->
-      <div *ngIf="codigo.invalid && codigo.touched">       
-        <small  [class.d-show]="codigo.invalid" *ngIf="codigo.hasError('required')">Campo obligatorio</small> 
-        <small  [class.d-show]="codigo.invalid" *ngIf="codigo.hasError('pattern')">Formato: 3 Letras - 4 Nros</small>      
-      </div>  
-      <!--  <div>{{codigo.errors | json}}</div>  
-           <button (click)="logMessage(codigo)">Log</button>  
-     -->    
+        <mat-form-field class="example-full-width">
+          <input matInput [(ngModel)]="product.productName" type="text"   name="producto" placeholder="Introducir Nombre">
+        </mat-form-field>
 
-  <p><label for="descripction">Descripcón</label>
-     <input        [(ngModel)]="product.description"               type="text"   name="descripcion" placeholder="Ingresar Género"></p>
-  <p><label for="fecha">Fecha</label>
-     <input #DATA [(ngModel)]="product.releaseDate"  type="date" name="fecha"       placeholder="Fecha"></p>
-  <p><label for="price">Precio</label>
-     <input [(ngModel)]="product.price" type="number"      name="price"       placeholder="Ingresar Año"></p>
-  <p><label for="rating"> 5 Star Rating:</label>       
-            <app-star [rating]='product.starRating' (ratingClicked)='onRatingClicked($event)'>
-            </app-star>
-  </p>
-  <p>
-    <img [style.width.px]='200' [style.margin.px]='2'
-         [src]='product.imageUrl'
-         [title]='product.productName'>
-  </p>  
-  <!-- <button (click)="onSubmit()" class="btn btn-primary btn-block">Guardar</button> -->
+        <mat-form-field class="example-full-width">
+            <input matInput  #codigo="ngModel" [class.is-invalid]="codigo.invalid && codigo.touched" required pattern="[\w]{3}[-][0-9]{4}$" 
+                    [(ngModel)]="product.productCode" type="text" name="codigo"   placeholder="DescripciÃ³n">
+             <div *ngIf="codigo.invalid && codigo.touched">       
+               <small  [class.d-show]="codigo.invalid" *ngIf="codigo.hasError('required')">Campo obligatorio</small> 
+               <small  [class.d-show]="codigo.invalid" *ngIf="codigo.hasError('pattern')">Formato: 3 Letras - 4 Nros</small>      
+             </div>  
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input  matInput [(ngModel)]="product.description" type="text"  
+             name="descripcion" placeholder="Ingresar descripcion">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input  matInput #DATA [(ngModel)]="product.releaseDate"  type="date" name="fecha"  >
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input  matInput [(ngModel)]="product.price" type="number"    
+              name="price"  placeholder="Precio" >
+        </mat-form-field>  
+        <tr>
+          <td style="width: 50%;">
+              <app-star [rating]='product.starRating' 
+                        (ratingClicked)='onRatingClicked($event)'>
+              </app-star><br>
+              <input [(ngModel)]="product.starRating" type="number"      name="EdRating" >
+              <br>
+              <mat-slider  name="EdRating1" min="1" max="5" step="0.5" [(ngModel)]="product.starRating"></mat-slider>
+          </td>         
+        </tr>           
+        <mat-form-field class="example-full-width">
+          <input  matInput [(ngModel)]="product.imageUrl" type="string" name="foto"  placeholder="Foto">
+        </mat-form-field> 
+        <img [style.width.px]='100' [style.margin.px]='2'
+                [src]='product.imageUrl'
+                [title]='product.productName'>
+      
+      </form>
+    </mat-card>
 
-   <button [disabled]="FProducto.form.invalid" type="submit">Guardar</button>
+      <tr> <td> <a   (click)="Cancelar()">Cancelar</a>  </td>
+          <td> <div *ngIf="!FProducto.form.invalid"> 
+              <a   (click)="onSubmit()">Guardar</a>
+              </div>
+          </td> 
+      </tr>
 
-</form>
-<a routerLink="../../">volver</a>
-</div>
+  </div>
+

@@ -1,22 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GestionarSesionService } from '../../shared/servicios/gestionar-sesion.service';
+import { Isession } from 'src/app/pojos/isession';
+import { GestionarSesionService } from 'src/app/shared/servicios/gestionar-sesion.service';
+
 
 @Component({
-  selector: 'Home',
+  selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private sesion:GestionarSesionService, private router: Router) { }
+  public logged:Isession;
+
+  constructor(private router:Router, private Session: GestionarSesionService) { 
+      this.logged=this.Session.getSession();
+  }
 
   ngOnInit(): void {
   }
 
-  Salir(){
-    this.sesion.LogOut();
-    this.router.navigateByUrl('Login');
+  Salir(){     
+    this.Session.LogOut();
+    this.router.navigateByUrl('/login');
   }
+
 
 }

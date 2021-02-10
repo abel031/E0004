@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IProductos, ProductoNuevo} from '../../../../pojos/iproductos';
 import { ProductosService } from '../services/productos.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {MatTableModule} from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'lista-productos',
@@ -9,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./lista-productos.component.css']
 })
 export class ListaProductosComponent implements OnInit {
+  displayedColumns = ["productName","productCode","releaseDate","starRating"];
   Title = 'Lista de productos';
   imageWidth = 50; imageMargin = 2; showImage = false;  //Mostrar imagen
   errorMessage = '';
