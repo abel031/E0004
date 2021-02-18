@@ -64,6 +64,7 @@ export class ListaProductosComponent implements OnInit {
       this.editing = true;
       let ItemIndex = this.ProductosFiltrados.findIndex(item => item.productId === id);
       this.product = this.productos[ItemIndex];
+      
       //this.router.navigate(['./Edita',id], {relativeTo:this.RutaActiva});  // Outlet generico hijo!!!
   }
 
